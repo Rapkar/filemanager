@@ -1,7 +1,7 @@
 <?php
 
 // include files
-require __DIR__ . '\inc.php';
+require __DIR__ . '/inc.php';
 // include files
 
     $list=getListFiles(['.jpg','.png']);
@@ -12,6 +12,6 @@ foreach( $list as $key=>$v) {
     var_dump( $list);
 // var_dump(getListFiles(['.jpg','.png']));
  // home page
-include VIEWSDIR.'\home.php';
+include VIEWSDIR.'/home.php';
 // home page
 
