@@ -1,6 +1,9 @@
 <?php
 
 $SpaceDetail = new SpaceDetail;
+$FileFinder=new FileFinder(PUBLICDIR);
+$list=$FileFinder->getListFiles(['.jpg','.png','.svg','.webp','.gif'],true);
+var_dump($FileFinder->getSizeOfFiles($list,['.jpg','.png','.svg','.webp','.gif']));
 function getSize($size, array $options = null)
 {
 
@@ -45,100 +48,26 @@ function getSize($size, array $options = null)
 				);
 }
 
-function getFilesCount()
-{
-	return count(array_slice(scandir(PUBLICDIR), 2));
-}
 
-function FindAllDirctory($dir)
-{
-	$result = [];
-	$cdir = scandir($dir);
-
-	foreach ($cdir as $key => $value) {
-
-		if (!in_array($value, array(".", ".."))) {
-
-			if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
-
-				$result[$value] = FindAllDirctory($dir . DIRECTORY_SEPARATOR . $value);
-			} else {
-				$result[] = $value;
-			}
-		}
-	}
-
-	return $result;
-}
-
-function getListFiles(array $type, $count = false)
-{
-
-	$results = [];
-	$list = [];
-	$tm=[];
-	$allfiles = FindAllDirctory(PUBLICDIR);
-	$list=array_flatten($allfiles);
-	foreach ($allfiles as $key => $item) {
+function array_flatten($array) { 
+	if (!is_array($array)) { 
+	  return FALSE; 
+	} 
+	$result = array(); 
+	foreach ($array as $key => $value) { 
+	  if (is_array($value)) { 
+		$result = array_merge($result, array_flatten($value)); 
+	  } 
+	  else { 
+		$result[$key] = $value; 
+	  } 
+	} 
+	return $result; 
+  } 
+  
 
 
-		if (is_array($item) && !is_null($item)) {
-
-			$results[] = $item;
-		} else if (!is_null($item)) {
-			$results[] = [$item];
-		}
-	}
-
-	$list = mergeList($results, $type);
-	
-	 foreach (array_flatten($list) as $item){
-	 if (!is_null($item) && in_array(strrchr($item, '.'), $type)) {
-		$tm[] =  $item;
-		 }
-	 }
-	if ($count === true && !empty($list)) {
-		return count($tm);
-	} else if ($count === false  && !empty($list)) {
-		return $tm;
-	} else {
-		return 0;
-	}
-}
 
 
-function mergeList($results, $type)
-{
-	
 
-	if (is_array($results)) {
 
-		foreach ($results as $result) {
-			
-			$list[] = mergeList($result, $type);
-		}
-		// if (!is_null($result) && in_array(strrchr($result[0], '.'), $type)) {
-		// $list[] = $result;
-		// }
-	}else{
-		$list[]=$results;
-	}
-	// var_dump($list);
-	return $list;
-}
-
-    function array_flatten($array) { 
-      if (!is_array($array)) { 
-        return FALSE; 
-      } 
-      $result = array(); 
-      foreach ($array as $key => $value) { 
-        if (is_array($value)) { 
-          $result = array_merge($result, array_flatten($value)); 
-        } 
-        else { 
-          $result[$key] = $value; 
-        } 
-      } 
-      return $result; 
-    } 
