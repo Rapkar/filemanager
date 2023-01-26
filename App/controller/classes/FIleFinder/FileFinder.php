@@ -12,13 +12,13 @@ class FileFinder
         $this->alldirctory = $this->FindAllDirctory($dir);
     }
 
-    
+
     public function FindAllDirctory($dir)
     {
-        if(!isset($dir)){
+        if (!isset($dir)) {
             $dir = $this->dir;
         }
-     
+
         $result = [];
         $cdir = scandir($dir);
 
@@ -82,12 +82,45 @@ class FileFinder
             return 0;
         }
     }
-    public function getSizeOfFiles($list,$type){
-        if(!isset($dir)){
-            $list = $this->getListFiles($type);
+    public function scanDirectories($rootDir,$allData = array())
+    {
+
+        if (!isset($rootDir)) {
+            $rootDir = $this->dir;
         }
-        foreach($list as $item){
-           echo filesize($item);
+        // set filenames invisible if you want
+        $invisibleFileNames = array(".", "..", ".htaccess", ".htpasswd");
+        // run through content of root directory
+        $dirContent = scandir($rootDir);
+        foreach ($dirContent as $key => $content) {
+            // filter all files not accessible
+            $path = $rootDir . '/' . $content;
+            if (!in_array($content, $invisibleFileNames)) {
+                // if content is file & readable, add to array
+                if (is_file($path) && is_readable($path)) {
+                    // save file name with path
+                    $allData[] = $path;
+                    // if content is a directory and readable, add path and name
+                } elseif (is_dir($path) && is_readable($path)) {
+                    // recursive callback to open new directory
+                    $allData = $this->scanDirectories($path, $allData);
+                }
+            }
         }
+        return $allData;
     }
+
+
+    public function getSizeOfFiles($type)
+    {
+        $list = $this->scanDirectories($this->dir);
+        $result=1;
+        foreach ($list as $item) {
+            if (!is_null($item) && in_array(strrchr($item, '.'), $type)) {
+                $result += filesize($item);
+            }
+        }
+        return getSize($result);
+    }
+
 }

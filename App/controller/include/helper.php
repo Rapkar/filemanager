@@ -2,8 +2,7 @@
 
 $SpaceDetail = new SpaceDetail;
 $FileFinder=new FileFinder(PUBLICDIR);
-$list=$FileFinder->getListFiles(['.jpg','.png','.svg','.webp','.gif'],true);
-var_dump($FileFinder->getSizeOfFiles($list,['.jpg','.png','.svg','.webp','.gif']));
+
 function getSize($size, array $options = null)
 {
 
@@ -50,6 +49,7 @@ function getSize($size, array $options = null)
 
 
 function array_flatten($array) { 
+
 	if (!is_array($array)) { 
 	  return FALSE; 
 	} 
@@ -65,6 +65,7 @@ function array_flatten($array) {
 	return $result; 
   } 
   
+
 
 
 
