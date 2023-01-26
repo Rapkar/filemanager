@@ -76,9 +76,9 @@ function getListFiles(array $type, $count = false)
 
 	$results = [];
 	$list = [];
-
+	$tm=[];
 	$allfiles = FindAllDirctory(PUBLICDIR);
-
+	$list=array_flatten($allfiles);
 	foreach ($allfiles as $key => $item) {
 
 
@@ -92,10 +92,15 @@ function getListFiles(array $type, $count = false)
 
 	$list = mergeList($results, $type);
 	
+	 foreach (array_flatten($list) as $item){
+	 if (!is_null($item) && in_array(strrchr($item, '.'), $type)) {
+		$tm[] =  $item;
+		 }
+	 }
 	if ($count === true && !empty($list)) {
-		return count($list);
+		return count($tm);
 	} else if ($count === false  && !empty($list)) {
-		return $list;
+		return $tm;
 	} else {
 		return 0;
 	}
@@ -121,3 +126,19 @@ function mergeList($results, $type)
 	// var_dump($list);
 	return $list;
 }
+
+    function array_flatten($array) { 
+      if (!is_array($array)) { 
+        return FALSE; 
+      } 
+      $result = array(); 
+      foreach ($array as $key => $value) { 
+        if (is_array($value)) { 
+          $result = array_merge($result, array_flatten($value)); 
+        } 
+        else { 
+          $result[$key] = $value; 
+        } 
+      } 
+      return $result; 
+    } 
