@@ -1,80 +1,46 @@
 <?php
 
 class FileFinder
-{   
+{
     private $dir;
     private $alldirctory;
 
-    public function __construct($dir=PUBLICDIR)
-    {
-     $this->dir=$dir;
-    }
-    public function test()
-    {
-        return $this->dir;
-    }
-    public function FindAllDirctory()
-    {
 
+    public function __construct($dir = PUBLICDIR)
+    {
+        $this->dir = $dir;
+        $this->alldirctory = $this->FindAllDirctory($dir);
+    }
+
+    
+    public function FindAllDirctory($dir)
+    {
+        if(!isset($dir)){
+            $dir = $this->dir;
+        }
+     
         $result = [];
-        $cdir = scandir(PUBLICDIR);
+        $cdir = scandir($dir);
 
         foreach ($cdir as $key => $value) {
 
             if (!in_array($value, array(".", ".."))) {
 
-                if (is_dir(PUBLICDIR. DIRECTORY_SEPARATOR . $value)) {
+                if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
 
-                    $result[$value] = $this->FindAllDirctory($this->dir . DIRECTORY_SEPARATOR . $value);
+                    $result[$value] = $this->FindAllDirctory($dir . DIRECTORY_SEPARATOR . $value);
                 } else {
                     $result[] = $value;
                 }
             }
         }
-        $this->alldirctory=$result;
-       return $result;
-   
-    }
 
-    public function getListFiles(array $type, $count = false)
-    {
-
-        $results = [];
-        $list = [];
-        $tm = [];
-        $list = $this->arrayFlatten($this->alldirctory);
-        // foreach ($allfiles as $key => $item) {
-
-
-        //     if (is_array($item) && !is_null($item)) {
-
-        //         $results[] = $item;
-        //     } else if (!is_null($item)) {
-        //         $results[] = [$item];
-        //     }
-        // }
-
-        // $list = $this->mergeList($results, $type);
-
-        foreach ($list as $item) {
-            if (!is_null($item) && in_array(strrchr($item, '.'), $type)) {
-                $tm[] =  $item;
-            }
-        }
-        if ($count === true && !empty($list)) {
-            return count($tm);
-        } else if ($count === false  && !empty($list)) {
-            return $tm;
-        } else {
-            return 0;
-        }
+        return  $result;
     }
 
 
     public function mergeList($results, $type)
     {
-
-
         if (is_array($results)) {
 
             foreach ($results as $result) {
@@ -86,20 +52,42 @@ class FileFinder
         }
         return $list;
     }
-
-    public function arrayFlatten($array)
+    public  function getListFiles(array $type, $count = false)
     {
-        if (!is_array($array)) {
-            return FALSE;
-        }
-        $result = array();
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                $result = array_merge($result, $this->arrayFlatten($value));
-            } else {
-                $result[$key] = $value;
+
+        $results = [];
+        $list = [];
+        $tm = [];
+        foreach ($this->alldirctory as $key => $item) {
+            if (is_array($item) && !is_null($item)) {
+
+                $results[] = $item;
+            } else if (!is_null($item)) {
+                $results[] = [$item];
             }
         }
-        return $result;
+
+        $list = $this->mergeList($results, $type);
+        foreach (array_flatten($list) as $item) {
+            if (!is_null($item) && in_array(strrchr($item, '.'), $type)) {
+                $tm[] =  $item;
+            }
+        }
+
+        if ($count === true && !empty($list)) {
+            return count($tm);
+        } else if ($count === false  && !empty($list)) {
+            return $tm;
+        } else {
+            return 0;
+        }
+    }
+    public function getSizeOfFiles($list,$type){
+        if(!isset($dir)){
+            $list = $this->getListFiles($type);
+        }
+        foreach($list as $item){
+           echo filesize($item);
+        }
     }
 }
