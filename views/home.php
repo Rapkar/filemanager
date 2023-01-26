@@ -57,7 +57,7 @@
                             </div>
                             <div class="flex-grow-1 ms-2">
                                 <h6 class="mb-0">Images</h6>
-                                <p class="mb-0 text-secondary"><?= getListFiles(['.jpg','.png','.svg','.webp','.gif'],true); ?>files</p>
+                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.jpg','.png','.svg','.webp','.gif'],true); ?>files</p>
                             </div>
                             <h6 class="text-primary mb-0">15.3 GB</h6>
                         </div>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="flex-grow-1 ms-2">
                                 <h6 class="mb-0">Documents</h6>
-                                <p class="mb-0 text-secondary"><?= getListFiles(['.text','.doc','.txt'],true); ?> files</p>
+                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.text','.doc','.txt'],true); ?> files</p>
                             </div>
                             <h6 class="text-primary mb-0">256 MB</h6>
                         </div>
@@ -75,7 +75,7 @@
                             </div>
                             <div class="flex-grow-1 ms-2">
                                 <h6 class="mb-0">Media Files</h6>
-                                <p class="mb-0 text-secondary"><?= getListFiles(['.mp3','.mp4','.flv','.avi','.3gp','.mkv'],true); ?> files</p>
+                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.mp3','.mp4','.flv','.avi','.3gp','.mkv'],true); ?> files</p>
                             </div>
                             <h6 class="text-primary mb-0">3.4 GB</h6>
                         </div>
