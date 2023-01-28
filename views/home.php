@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,7 +47,7 @@
                         <p class="mb-0 mt-2"><span class="text-secondary">Used</span><span class="float-end text-primary">Upgrade</span>
                         </p>
                         <div class="progress mt-3" style="height:7px;">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $SpaceDetail->getPercentOfSpace('Used') ?>%" aria-valuenow="<?= $SpaceDetail->getPercentOfSpace('Used') ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $SpaceDetail->getPercentOfSpace('Used') ?>%" aria-valuenow="<?= $SpaceDetail->getPercentOfSpace('Used') ?>" aria-valuemin="0" aria-valuemax="100"></div>
                             <div class="progress-bar bg-success" role="progressbar" style="width: <?= $SpaceDetail->getPercentOfSpace('Free') ?>%" aria-valuenow="<?= $SpaceDetail->getPercentOfSpace('Free') ?>" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="mt-3"></div>
@@ -57,27 +56,27 @@
                             </div>
                             <div class="flex-grow-1 ms-2">
                                 <h6 class="mb-0">Images</h6>
-                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.jpg','.png','.svg','.webp','.gif'],true); ?>files</p>
+                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.jpg', '.png', '.svg', '.webp', '.gif'], true); ?>files</p>
                             </div>
-                            <h6 class="text-primary mb-0"><?= $FileFinder->getSizeOfFiles(['.jpg','.png','.svg','.webp','.gif']); ?></h6>
+                            <h6 class="text-primary mb-0"><?= $FileFinder->getSizeOfFiles(['.jpg', '.png', '.svg', '.webp', '.gif']); ?></h6>
                         </div>
                         <div class="d-flex align-items-center mt-3">
                             <div class="fm-file-box bg-light-success text-success"><i class="bx bxs-file-doc"></i>
                             </div>
                             <div class="flex-grow-1 ms-2">
                                 <h6 class="mb-0">Documents</h6>
-                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.text','.doc','.txt'],true); ?> files</p>
+                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.text', '.doc', '.txt','.pdf'], true); ?> files</p>
                             </div>
-                            <h6 class="text-primary mb-0"><?= $FileFinder->getSizeOfFiles(['.text','.doc','.txt']); ?></h6>
+                            <h6 class="text-primary mb-0"><?= $FileFinder->getSizeOfFiles(['.text', '.doc', '.txt','.pdf']); ?></h6>
                         </div>
                         <div class="d-flex align-items-center mt-3">
                             <div class="fm-file-box bg-light-danger text-danger"><i class="bx bx-video"></i>
                             </div>
                             <div class="flex-grow-1 ms-2">
                                 <h6 class="mb-0">Media Files</h6>
-                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.mp3','.mp4','.flv','.avi','.3gp','.mkv'],true); ?> files</p>
+                                <p class="mb-0 text-secondary"><?= $FileFinder->getListFiles(['.mp3', '.mp4', '.flv', '.avi', '.3gp', '.mkv'], true); ?> files</p>
                             </div>
-                            <h6 class="text-primary mb-0"><?= $FileFinder->getSizeOfFiles(['.mp3','.mp4','.flv','.avi','.3gp','.mkv']); ?></h6>
+                            <h6 class="text-primary mb-0"><?= $FileFinder->getSizeOfFiles(['.mp3', '.mp4', '.flv', '.avi', '.3gp', '.mkv']); ?></h6>
                         </div>
 
                     </div>
@@ -89,7 +88,7 @@
                         <div class="fm-search">
                             <div class="mb-0">
                                 <div class="input-group input-group-lg"> <span class="input-group-text bg-transparent"><i class="fa fa-search"></i></span>
-                                    <input type="text" class="form-control" placeholder="Search the files">
+                                    <input type="text" class="form-control" id="searchfield" placeholder="Search the files">
                                 </div>
                             </div>
                         </div>
@@ -122,7 +121,7 @@
                                             </div>
                                         </div>
                                         <h5 class="mt-3 mb-0">Used Space</h5>
-                                        <p class="mb-1 mt-4"><span><?= $SpaceDetail->getUsedSpace()?></span>
+                                        <p class="mb-1 mt-4"><span><?= $SpaceDetail->getUsedSpace() ?></span>
                                         </p>
                                         <div class="progress" style="height: 7px;">
                                             <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $SpaceDetail->getPercentOfSpace('Used')  ?>%;" aria-valuenow=" <?= $SpaceDetail->getPercentOfSpace('Used')  ?>" aria-valuemin="0" aria-valuemax="100"></div>
@@ -198,129 +197,29 @@
                                     <tr>
                                         <th>Name <i class="bx bx-up-arrow-alt ms-2"></i>
                                         </th>
-                                        <th>Members</th>
+                                        <th>Size</th>
                                         <th>Last Modified</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
+                                    <?php foreach ($FileFinder->getRecentFIles() as $item) : ?>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div><i class=" bx bxs-file-<?= $item['extention'] ?> me-2 font-24 text-danger"></i>
+                                                    </div>
+                                                    <div class="font-weight-bold text-danger"><?= $item['name'] ?></div>
                                                 </div>
-                                                <div class="font-weight-bold text-danger">Competitor Analysis Template</div>
-                                            </div>
-                                        </td>
-                                        <td>Only you</td>
-                                        <td>Sep 3, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file me-2 font-24 text-primary"></i>
-                                                </div>
-                                                <div class="font-weight-bold text-primary">How to Create a Case Study</div>
-                                            </div>
-                                        </td>
-                                        <td>3 members</td>
-                                        <td>Jun 12, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file me-2 font-24 text-primary"></i>
-                                                </div>
-                                                <div class="font-weight-bold text-primary">Landing Page Structure</div>
-                                            </div>
-                                        </td>
-                                        <td>10 members</td>
-                                        <td>Jul 17, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
-                                                </div>
-                                                <div class="font-weight-bold text-danger">Meeting Report</div>
-                                            </div>
-                                        </td>
-                                        <td>5 members</td>
-                                        <td>Aug 28, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file me-2 font-24 text-primary"></i>
-                                                </div>
-                                                <div class="font-weight-bold text-primary">Project Documents</div>
-                                            </div>
-                                        </td>
-                                        <td>Only you</td>
-                                        <td>Aug 17, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file-doc me-2 font-24 text-success"></i>
-                                                </div>
-                                                <div class="font-weight-bold text-success">Review Checklist Template</div>
-                                            </div>
-                                        </td>
-                                        <td>7 members</td>
-                                        <td>Sep 8, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file me-2 font-24 text-primary"></i>
-                                                </div>
-                                                <div class="font-weight-bold text-primary">How to Create a Case Study</div>
-                                            </div>
-                                        </td>
-                                        <td>3 members</td>
-                                        <td>Jun 12, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file me-2 font-24 text-primary"></i>
-                                                </div>
-                                                <div class="font-weight-bold text-primary">Landing Page Structure</div>
-                                            </div>
-                                        </td>
-                                        <td>10 members</td>
-                                        <td>Jul 17, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div><i class="bx bxs-file-doc me-2 font-24 text-success"></i>
-                                                </div>
-                                                <div class="font-weight-bold text-success">Review Checklist Template</div>
-                                            </div>
-                                        </td>
-                                        <td>7 members</td>
-                                        <td>Sep 8, 2019</td>
-                                        <td><i class="fa fa-ellipsis-h font-24"></i>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td><?= $item['size'] ?></td>
+                                            <td><?= $item['date'] ?></td>
+                                            <td><i class="fa fa-ellipsis-h  font-24"></i>
+                                            </td>
+                                        </tr>
+
+                                    <?php endforeach; ?>
+
                                 </tbody>
                             </table>
                         </div>
@@ -431,9 +330,8 @@
             border-radius: 50% !important;
         }
     </style>
-    <script type="text/javascript">
-
-    </script>
+    <script src="./views/resource/jquery.min.js" ></script>
+    <script src="./views/resource/main.js" ></script>
 </body>
 
 </html>

@@ -91,7 +91,7 @@ class FileFinder
         // set filenames invisible if you want
         $invisibleFileNames = array(".", "..", ".htaccess", ".htpasswd");
         // run through content of root directory
-        $dirContent = scandir($rootDir);
+        $dirContent = scandir($rootDir,SCANDIR_SORT_DESCENDING);
         foreach ($dirContent as $key => $content) {
             // filter all files not accessible
             $path = $rootDir . '/' . $content;
@@ -121,6 +121,21 @@ class FileFinder
             }
         }
         return getSize($result);
+    }
+    public function getRecentFIles(){
+        $list=$this->scanDirectories($this->dir);
+        $result=[];
+        foreach($list as $item){
+            $result[]= [
+                'name'=>basename($item),
+                'size'=>getSize(filesize($item)),
+                'date'=> date('m/d/Y',filemtime($item)),
+                'dir'=>$item,
+                'extention'=> str_replace('.','',strrchr($item, '.'))
+            ];
+
+        }
+        return $result;
     }
 
 }
