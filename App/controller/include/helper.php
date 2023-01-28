@@ -2,7 +2,6 @@
 
 $SpaceDetail = new SpaceDetail;
 $FileFinder=new FileFinder(PUBLICDIR);
-var_dump($FileFinder->getRecentFIles());
 function getSize($size, array $options = null)
 {
 

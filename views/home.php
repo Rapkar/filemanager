@@ -92,6 +92,23 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="search-result" style="display: none;" class="table-responsive mt-3">
+                        <table class="table table-striped table-hover table-sm mb-0">
+<thead>
+    <tr>
+        <th>Name <i class="bx bx-up-arrow-alt ms-2"></i>
+        </th>
+        <th>Size</th>
+        <th>Last Modified</th>
+        <th></th>
+    </tr>
+</thead>
+<tbody id="search-result-box">
+
+</tbody>
+                        </table>
+
+                        </div>
                         <div class="row mt-3">
                             <div class="col-12 col-lg-4">
                                 <div class="card shadow-none border radius-15">

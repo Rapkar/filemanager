@@ -2,11 +2,16 @@ $(document).ready(function($){
    $('#searchfield').on('keyup',function(){
    var data=$(this).val();
    $.ajax({
-    url: "test.html",
-    cache: false
+    url: "../filemanager/inc.php",
+    type:'POST',
+    cache: false,
+    'data':{data:data},
   })
     .done(function( html ) {
-      $( "#results" ).append( html );
+        $('#search-result').fadeIn('slow');
+        $('#search-result-box').empty();
+        $('#search-result-box').append(html);
+      console.log(html);
     });
    })
 });

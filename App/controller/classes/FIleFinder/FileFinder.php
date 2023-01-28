@@ -82,7 +82,7 @@ class FileFinder
             return 0;
         }
     }
-    public function scanDirectories($rootDir,$allData = array())
+    public function scanDirectories($rootDir, $allData = array())
     {
 
         if (!isset($rootDir)) {
@@ -91,7 +91,7 @@ class FileFinder
         // set filenames invisible if you want
         $invisibleFileNames = array(".", "..", ".htaccess", ".htpasswd");
         // run through content of root directory
-        $dirContent = scandir($rootDir,SCANDIR_SORT_DESCENDING);
+        $dirContent = scandir($rootDir, SCANDIR_SORT_DESCENDING);
         foreach ($dirContent as $key => $content) {
             // filter all files not accessible
             $path = $rootDir . '/' . $content;
@@ -114,7 +114,7 @@ class FileFinder
     public function getSizeOfFiles($type)
     {
         $list = $this->scanDirectories($this->dir);
-        $result=1;
+        $result = 1;
         foreach ($list as $item) {
             if (!is_null($item) && in_array(strrchr($item, '.'), $type)) {
                 $result += filesize($item);
@@ -122,20 +122,29 @@ class FileFinder
         }
         return getSize($result);
     }
-    public function getRecentFIles(){
-        $list=$this->scanDirectories($this->dir);
-        $result=[];
-        foreach($list as $item){
-            $result[]= [
-                'name'=>basename($item),
-                'size'=>getSize(filesize($item)),
-                'date'=> date('m/d/Y',filemtime($item)),
-                'dir'=>$item,
-                'extention'=> str_replace('.','',strrchr($item, '.'))
+    public function getRecentFIles()
+    {
+        $list = $this->scanDirectories($this->dir);
+        $result = [];
+        foreach ($list as $item) {
+            $result[] = [
+                'name' => basename($item),
+                'size' => getSize(filesize($item)),
+                'date' => date('m/d/Y', filemtime($item)),
+                'dir' => $item,
+                'extention' => str_replace('.', '', strrchr($item, '.'))
             ];
-
         }
         return $result;
     }
-
+    public function findeFileWithName($name)
+    {
+        $result = [];
+        foreach ($this->getRecentFIles() as $item) {
+            if (str_contains($item['name'], $name)) {
+                $result []= $item;
+            } 
+        }
+        return $result;
+    }
 }
